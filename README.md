@@ -89,21 +89,19 @@ Estimates the likely position of the target based on value distribution.
 
 ## Search Benchmark Results
 
-| Dataset Size | Linear Search | Binary Search | Jump Search | Interpolation Search |
-| ------------ | ------------- | ------------- | ----------- | -------------------- |
-| 1,000        | 0.002089 ms   | 0.004315 ms   | 0.076887 ms | 0.002004 ms          |
-| 10,000       | 0.001208 ms   | 0.001160 ms   | 0.100620 ms | 0.001493 ms          |
-| 50,000       | 0.001339 ms   | 0.001498 ms   | 0.219862 ms | 0.002315 ms          |
+| Dataset Size | Binary Search | Interpolation Search | Jump Search | Linear Search |
+| ------------ | ------------- | -------------------- | ----------- | ------------- |
+| 1,000        | 0.001963 ms   | 0.002690 ms          | 0.054423 ms | 0.002467 ms   |
+| 10,000       | 0.001733 ms   | 0.001413 ms          | 0.157970 ms | 0.001983 ms   |
+| 50,000       | 0.001904 ms   | 0.001644 ms          | 0.282153 ms | 0.002376 ms   |
 
 ---
 
 ## Search Algorithm Analysis
 
-Based on the benchmark results, binary search demonstrated the most stable and efficient performance overall. At n = 1,000, interpolation search achieved the fastest execution time at 0.002004 ms, slightly outperforming binary search at 0.004315 ms. However, as dataset size increased to 10,000 and 50,000, binary search became consistently faster, requiring only 0.001160 ms and 0.001498 ms respectively.
+Binary Search and Interpolation Search showed the best overall performance. At n = 10,000, Interpolation Search took approximately 0.0014 ms, while Binary Search took 0.0017 ms. Linear Search remained competitive on small datasets at 0.0019 ms for 10,000 elements, while Jump Search consistently performed the worst, increasing from 0.0544 ms at 1,000 elements to 0.2821 ms at 50,000 elements.
 
-Jump search produced the slowest performance across all dataset sizes, reaching 0.219862 ms at n = 50,000 due to the additional jumping and scanning operations required before locating the target value.
-
-Although linear search occasionally produced very small measured times, its overall complexity remains O(n), making it less scalable for significantly larger datasets.
+These results reflect their theoretical complexities, with Binary Search and Interpolation Search outperforming algorithms with higher complexity as the dataset size increased.
 
 ---|---|---|---|---|
 | 1,000 | 0.002089 ms | 0.004315 ms | 0.076887 ms | 0.002004 ms |
@@ -177,18 +175,18 @@ The BST implementation avoids traversing unnecessary branches, improving efficie
 
 ## BST Benchmark Results
 
-| Method             | Time         |
-| ------------------ | ------------ |
-| BST Range Query    | 0.6491 ms    |
-| Baseline Filtering | 1330.2251 ms |
+| Method             | Time       |
+| ------------------ | ---------- |
+| BST Range Query    | 0.95 ms    |
+| Baseline Filtering | 1785.96 ms |
 
 ---
 
 ## BST Analysis
 
-The BST range query significantly outperformed the baseline filtering approach. At n = 50,000, the BST query required only 0.6491 ms, while the baseline sequential filtering operation required 1330.2251 ms.
+The BST range query significantly outperformed the baseline linear scan. For 50,000 elements, the BST query completed in approximately 0.95 ms, while the baseline filter required 1785.96 ms.
 
-The BST was more efficient because the tree structure allowed the algorithm to skip irrelevant branches and traverse only nodes within the requested range. In contrast, the baseline method scanned every row in the dataset sequentially.
+The BST performs faster because it skips subtrees outside the requested range instead of scanning every row sequentially.
 
 The results demonstrate how ordered tree structures can dramatically reduce unnecessary comparisons during range-based queries.
 
@@ -244,20 +242,18 @@ Returns the root element without removing it.
 
 ## Heap Benchmark Results
 
-| Method           | Time         |
-| ---------------- | ------------ |
-| Heap Top-k       | 2689.0427 ms |
-| Baseline Sorting | 189.5159 ms  |
+| Method           | Time       |
+| ---------------- | ---------- |
+| Heap Top-k       | 2840.41 ms |
+| Baseline Sorting | 197.44 ms  |
 
 ---
 
 ## Heap Analysis
 
-Although heaps are theoretically efficient for top-k queries, the baseline sorting implementation performed faster in practice. The custom heap implementation required 2689.0427 ms, while Python's built-in sorting required only 189.5159 ms.
+The baseline sorting approach outperformed the custom Heap Top-k implementation. At 50,000 elements, sorting completed in approximately 197.44 ms, while the heap implementation required around 2840.41 ms.
 
-This occurred because Python's `sorted()` function is highly optimized internally in C, whereas the manually implemented heap introduced additional Python-level overhead through repeated swaps, heapify operations, and row conversions.
-
-Despite the slower runtime, the heap implementation still correctly maintained the top 10 most popular songs while processing the dataset incrementally.
+Although heaps have better theoretical complexity for top-k problems, Python’s built-in `sorted()` function is highly optimized in C, making it faster in practice t
 
 ---|---|
 | Heap Top-k | 2689.0427 ms |
