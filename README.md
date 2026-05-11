@@ -103,11 +103,6 @@ Binary Search and Interpolation Search showed the best overall performance. At n
 
 These results reflect their theoretical complexities, with Binary Search and Interpolation Search outperforming algorithms with higher complexity as the dataset size increased.
 
----|---|---|---|---|
-| 1,000 | 0.002089 ms | 0.004315 ms | 0.076887 ms | 0.002004 ms |
-| 10,000 | 0.001208 ms | 0.001160 ms | 0.100620 ms | 0.001493 ms |
-| 50,000 | 0.001339 ms | 0.001498 ms | 0.219862 ms | 0.002315 ms |
-
 ---
 
 ## Observations
@@ -190,10 +185,6 @@ The BST performs faster because it skips subtrees outside the requested range in
 
 The results demonstrate how ordered tree structures can dramatically reduce unnecessary comparisons during range-based queries.
 
----|---|
-| BST Range Query | 0.6491 ms |
-| Baseline Filtering | 1330.2251 ms |
-
 ---
 
 ## Observations
@@ -253,11 +244,7 @@ Returns the root element without removing it.
 
 The baseline sorting approach outperformed the custom Heap Top-k implementation. At 50,000 elements, sorting completed in approximately 197.44 ms, while the heap implementation required around 2840.41 ms.
 
-Although heaps have better theoretical complexity for top-k problems, Python’s built-in `sorted()` function is highly optimized in C, making it faster in practice t
-
----|---|
-| Heap Top-k | 2689.0427 ms |
-| Baseline Sorting | 189.5159 ms |
+Although heaps have better theoretical complexity for top-k problems, Python’s built-in `sorted()` function is highly optimized in C, making it faster in practice 
 
 ---
 
